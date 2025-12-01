@@ -13,12 +13,12 @@ from utils.config import DEFAULT_PARAMS
 
 def main():
     parser = argparse.ArgumentParser(description='ML решение задачи о колебаниях груза')
-    parser.add_argument('--mode', type=str, default='compare', 
+    parser.add_argument('--mode', type=str, default='predict', 
                        choices=['train', 'predict', 'compare', 'analyze'],
                        help='Режим работы')
     parser.add_argument('--model', type=str, default='ml',
                        choices=['pinn', 'ml', 'lstm', 'all'])
-    parser.add_argument('--epochs', type=int, default=1000)
+    parser.add_argument('--epochs', type=int, default=10000)
     parser.add_argument('--visualize', action='store_true', default=True)
     
     args = parser.parse_args()
@@ -74,7 +74,7 @@ def train_models(params, args):
 def make_predictions(params, args):
     """Создание предсказаний"""
     from examples.basic_example import run_basic_example
-    run_basic_example(params)
+    run_basic_example(params, args)
 
 def compare_methods(params, args):
     """Сравнение различных методов"""

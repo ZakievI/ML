@@ -14,7 +14,7 @@ from models.ml_predictor import MLPredictorTrainer
 from utils.visualization import ResultVisualizer
 from utils.config import DEFAULT_PARAMS
 
-def run_basic_example(params: dict = None):
+def run_basic_example(params: dict = None, args = None):
     """Запуск базового примера"""
     if params is None:
         params = DEFAULT_PARAMS
@@ -32,13 +32,13 @@ def run_basic_example(params: dict = None):
     # 2. Решение с помощью PINN
     print("2. Решение с помощью Physics-Informed NN...")
     pinn = PhysicsInformedNN()
-    pinn_losses = pinn.train(params, epochs=500)
+    pinn_losses = pinn.train(params, epochs=args.epochs)
     solution_pinn = pinn.predict(t_numeric, params)
     
     # 3. Решение с помощью ML
     print("3. Решение с помощью ML модели...")
     ml_trainer = MLPredictorTrainer()
-    ml_model, ml_losses = ml_trainer.train(epochs=1000)
+    ml_model, ml_losses = ml_trainer.train(epochs=args.epochs)
     solution_ml = ml_trainer.predict(t_numeric, params)
     
     # 4. Визуализация

@@ -32,12 +32,14 @@ class ResultVisualizer:
         
         # Координаты по времени
         for i, coord_name in enumerate(['x', 'y']):
-            row, col = i // 2, i % 2
-            if row == 0:
+            col = i % 2
+            if col == 0:
                 row = 1
+            else:
+                row = 0
             axes[row, col].plot(t_numeric, solution_numeric[i*2], 
                               'b-', label='Численный', linewidth=2)
-            axes[row, col].plot(t_ml, solution_ml[i*2,:], 
+            axes[row, col].plot(t_ml, solution_ml[:,i*2], 
                               'r--', label='ML', linewidth=2)
             axes[row, col].set_xlabel('Время, с')
             axes[row, col].set_ylabel(f'{coord_name}, м')
@@ -48,7 +50,7 @@ class ResultVisualizer:
         # Скорости
         axes[1, 1].plot(t_numeric, np.sqrt(solution_numeric[1]**2 + solution_numeric[3]**2),
                        'b-', label='Численный', linewidth=2)
-        axes[1, 1].plot(t_ml, np.sqrt(solution_ml[1,:]**2 + solution_ml[3, :]**2),
+        axes[1, 1].plot(t_ml, np.sqrt(solution_ml[:,1]**2 + solution_ml[:, 3]**2),
                        'r--', label='ML', linewidth=2)
         axes[1, 1].set_xlabel('Время, с')
         axes[1, 1].set_ylabel('|v|, м/с')
